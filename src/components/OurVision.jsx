@@ -167,7 +167,7 @@ const OurVision = () => {
               </h3>
               
               <RainbowButton
-                to="/register"
+                to="/login"
                 className="!px-16 !py-6 !text-xl"
               >
                 Join Community

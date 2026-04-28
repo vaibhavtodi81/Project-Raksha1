@@ -28,7 +28,7 @@ const LandingPage = () => {
 
         {/* ── Top Right Action Button ──────────────────────────────── */}
         <div className="absolute top-8 right-10 z-50">
-          <RainbowButton to="/register" className="!px-6 !py-2 !text-[10px]">
+          <RainbowButton to="/login" className="!px-6 !py-2 !text-[10px]">
             Join Community
           </RainbowButton>
         </div>
