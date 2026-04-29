@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ProfileCard from './ProfileCard/ProfileCard';
-import vaibhavImg from '../assets/team/vaibhav.png';
+import vaibhavImg from '../assets/team/Vaibhav.png';
 import riyaImg from '../assets/team/riya.png';
 import vinayakImg from '../assets/team/vinayak.png';
 
