@@ -3,11 +3,16 @@ import { Link } from 'react-router-dom';
 
 const UserDashboard = () => {
   const [sosActive, setSosActive] = useState(false);
-  const [userName] = useState("Priya"); // Hardcoded user name
+  const [userName] = useState("Priya");
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Hardcoded data
   const deviceConnected = true;
   const isInSafeZone = true;
+  const wellnessScore = 92;
+  const incidentsCount = 2;
+  const cyberComplaintsCount = 1;
+
   const emergencyContacts = [
     { name: "Mom", phone: "+91 9876543210" },
     { name: "Dad", phone: "+91 9876543211" },
@@ -41,178 +46,290 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-950 text-white p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
-
-        {/* Personalized Greeting */}
-        <div className="text-center py-4">
-          <h1 className="text-3xl font-bold text-sensual-offwhite italic">
-            Welcome back, {userName}!
-          </h1>
+    <div className="min-h-screen bg-gradient-to-br from-sensual-offwhite via-dark-50 to-sensual-cream text-sensual-black flex overflow-hidden">
+      
+      {/* Sidebar Navigation */}
+      <div className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white border-r border-sensual-taupe/20 transition-all duration-300 flex flex-col shadow-sm`}>
+        <div className="p-6 border-b border-sensual-taupe/20">
+          <h2 className="text-xl font-bold italic text-sensual-burgundy">Raksha</h2>
+          <p className="text-xs text-sensual-taupe uppercase tracking-widest">Your Shield</p>
         </div>
-
-        {/* SOS Button Section */}
-        <div className="bg-primary-900/20 backdrop-blur-sm border border-primary-500/20 rounded-2xl p-8 text-center">
-          <button
-            onClick={handleSosToggle}
-            className={`w-48 h-48 rounded-full text-2xl font-bold mb-4 transition-all duration-300 ${
-              sosActive
-                ? 'bg-red-600 hover:bg-red-700 shadow-red-500/50 shadow-2xl animate-pulse'
-                : 'bg-primary-500 hover:bg-primary-600 shadow-primary-500/50 shadow-2xl'
-            }`}
-          >
-            {sosActive ? 'SOS ACTIVE' : 'SOS'}
+        
+        <nav className="flex-1 p-4 space-y-3">
+          <button className="w-full text-left px-4 py-3 rounded-xl bg-sensual-burgundy/10 text-sensual-burgundy font-semibold transition-all hover:bg-sensual-burgundy/20">
+            {sidebarOpen ? '🏠 Dashboard' : '🏠'}
           </button>
-          <div className="text-xl font-semibold">
-            Status: <span className={sosActive ? 'text-red-400' : 'text-green-400'}>
-              {sosActive ? 'SOS Active' : 'You Are Safe'}
-            </span>
-          </div>
+          <button className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all">
+            {sidebarOpen ? '📁 Evidence' : '📁'}
+          </button>
+          <button className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all">
+            {sidebarOpen ? '📋 Reports' : '📋'}
+          </button>
+          <button className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all">
+            {sidebarOpen ? '⚙️ Settings' : '⚙️'}
+          </button>
+        </nav>
+
+        <div className="p-4 border-t border-sensual-taupe/20">
+          <button 
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="w-full text-center py-2 text-sensual-taupe hover:text-sensual-burgundy transition-colors"
+          >
+            {sidebarOpen ? '◀' : '▶'}
+          </button>
         </div>
+      </div>
 
-        {/* Device Connection & Location Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-          {/* Device Connection Status */}
-          <div className="bg-primary-900/20 backdrop-blur-sm border border-primary-500/20 rounded-2xl p-6">
-            <h3 className="text-xl font-bold mb-4 text-sensual-offwhite">Device Status</h3>
-            <div className="flex items-center space-x-3">
-              <div className={`w-4 h-4 rounded-full ${deviceConnected ? 'bg-green-400' : 'bg-red-400'}`}></div>
-              <span className="text-lg">
-                {deviceConnected ? 'Raksha Device Connected' : 'Device Disconnected'}
-              </span>
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto">
+        {/* Top Header */}
+        <div className="bg-white border-b border-sensual-taupe/20 px-8 py-6 sticky top-0 z-10 shadow-sm">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold italic text-sensual-burgundy">Welcome, {userName}! 👋</h1>
+              <p className="text-sensual-taupe text-sm mt-1">Everything's looking good today</p>
             </div>
-          </div>
-
-          {/* Live Location */}
-          <div className="bg-primary-900/20 backdrop-blur-sm border border-primary-500/20 rounded-2xl p-6">
-            <h3 className="text-xl font-bold mb-4 text-sensual-offwhite">Live Location</h3>
-            <div className="aspect-video bg-dark-800 rounded-lg mb-3 overflow-hidden">
-              {/* Placeholder for map - using iframe for demo */}
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0x73b6e9c6b0c7e4e!2sBangalore%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Live Location Map"
-              ></iframe>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className={`w-4 h-4 rounded-full ${isInSafeZone ? 'bg-green-400' : 'bg-yellow-400'}`}></div>
-              <span className="text-lg">
-                {isInSafeZone ? 'Inside Safe Zone' : 'Outside Safe Zone'}
-              </span>
+            <div className="text-right">
+              <p className="text-sensual-taupe text-xs uppercase tracking-widest">Last check</p>
+              <p className="text-sensual-burgundy font-semibold">Just now</p>
             </div>
           </div>
         </div>
 
-        {/* Emergency Contacts */}
-        <div className="bg-primary-900/20 backdrop-blur-sm border border-primary-500/20 rounded-2xl p-6">
-          <h3 className="text-xl font-bold mb-4 text-sensual-offwhite">Emergency Contacts</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {emergencyContacts.map((contact, index) => (
-              <div key={index} className="flex items-center justify-between bg-dark-800/50 rounded-lg p-4">
-                <div>
-                  <div className="font-semibold">{contact.name}</div>
-                  <div className="text-sm text-dark-400">{contact.phone}</div>
-                </div>
-                <button
-                  onClick={() => handleCall(contact.phone)}
-                  className="bg-primary-500 hover:bg-primary-600 px-4 py-2 rounded-lg font-semibold transition-colors"
-                >
-                  Call
-                </button>
+        {/* Main Content Area */}
+        <div className="p-8 space-y-8">
+
+          {/* Top Status Cards - Simplified */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Safety Status */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+              <div className="flex justify-between items-start mb-3">
+                <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold">Safety Status</p>
+                <div className={`w-3 h-3 rounded-full ${sosActive ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></div>
               </div>
-            ))}
-          </div>
-        </div>
+              <p className={`text-3xl font-bold italic ${sosActive ? 'text-red-600' : 'text-emerald-600'}`}>
+                {sosActive ? 'Alert' : 'Safe'}
+              </p>
+              <p className="text-sensual-taupe text-xs mt-2">{sosActive ? 'Active' : 'No alerts'}</p>
+            </div>
 
-        {/* Recent Activity Feed */}
-        <div className="bg-primary-900/20 backdrop-blur-sm border border-primary-500/20 rounded-2xl p-6">
-          <h3 className="text-xl font-bold mb-4 text-sensual-offwhite">Recent Activity</h3>
+            {/* Quick Checkup */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+              <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold mb-3">Wellness</p>
+              <p className="text-3xl font-bold text-sensual-peach">{wellnessScore}%</p>
+              <p className="text-sensual-taupe text-xs mt-2">All systems good</p>
+            </div>
 
-          {/* SOS Alerts */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold mb-3 text-sensual-peach">Recent SOS Alerts</h4>
-            <div className="space-y-2">
-              {recentSosAlerts.map((alert, index) => (
-                <div key={index} className="flex justify-between items-center bg-dark-800/30 rounded-lg p-3">
-                  <span>{alert.time}</span>
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    alert.status === 'Resolved' ? 'bg-green-600' : 'bg-yellow-600'
-                  }`}>
-                    {alert.status}
-                  </span>
-                </div>
-              ))}
+            {/* Activity Summary */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+              <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold mb-3">Recent Activity</p>
+              <p className="text-3xl font-bold text-sensual-burgundy">{incidentsCount}</p>
+              <p className="text-sensual-taupe text-xs mt-2">Reports this month</p>
+            </div>
+
+            {/* Device Health */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+              <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold mb-3">Device</p>
+              <p className={`text-3xl font-bold ${deviceConnected ? 'text-emerald-600' : 'text-red-600'}`}>
+                {deviceConnected ? '✓' : '!'}
+              </p>
+              <p className="text-sensual-taupe text-xs mt-2">{deviceConnected ? 'Connected' : 'Check'}</p>
             </div>
           </div>
 
-          {/* Incident Reports */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold mb-3 text-sensual-peach">Recent Incident Reports</h4>
-            <div className="space-y-2">
-              {recentIncidents.map((incident, index) => (
-                <div key={index} className="flex justify-between items-center bg-dark-800/30 rounded-lg p-3">
-                  <span>{incident.id}</span>
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    incident.status === 'Closed' ? 'bg-green-600' : 'bg-yellow-600'
-                  }`}>
-                    {incident.status}
+          {/* Main Action & Location Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* SOS Button Section */}
+            <div className="lg:col-span-1 bg-gradient-to-br from-sensual-burgundy/20 via-sensual-peach/20 to-sensual-taupe/10 backdrop-blur border border-sensual-peach/30 rounded-2xl p-8 flex flex-col items-center justify-center shadow-md hover:shadow-lg transition-all">
+              <div className="text-center">
+                <p className="text-sensual-taupe text-xs uppercase tracking-widest mb-6 font-semibold">In Need?</p>
+                <button
+                  onClick={handleSosToggle}
+                  className={`w-28 h-28 rounded-full text-4xl font-bold mb-6 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105 ${
+                    sosActive
+                      ? 'bg-red-500 hover:bg-red-600 shadow-red-300 animate-pulse text-white'
+                      : 'bg-sensual-burgundy hover:bg-sensual-burgundy/90 shadow-sensual-burgundy/30 text-white'
+                  }`}
+                >
+                  {sosActive ? '⚠️' : '🆘'}
+                </button>
+                <p className="text-sensual-taupe text-xs mb-2">Tap to activate</p>
+                <div className={`inline-block px-4 py-1.5 rounded-full text-sm font-semibold ${sosActive ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                  {sosActive ? 'Alert Active' : "You're Safe"}
+                </div>
+              </div>
+            </div>
+
+            {/* Live Location Map */}
+            <div className="lg:col-span-2 bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 overflow-hidden shadow-md hover:shadow-lg transition-all">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-sensual-burgundy">Your Location</h3>
+                  <p className="text-sensual-taupe text-xs mt-1">Real-time tracking</p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className={`w-2.5 h-2.5 rounded-full ${isInSafeZone ? 'bg-emerald-500' : 'bg-yellow-500'}`}></div>
+                  <span className="text-xs text-sensual-taupe uppercase tracking-widest font-semibold">
+                    {isInSafeZone ? '✓ Safe Zone' : '⚡ Alert Zone'}
                   </span>
                 </div>
-              ))}
+              </div>
+              <div className="aspect-video bg-gradient-to-br from-sensual-taupe/10 to-sensual-cream rounded-xl overflow-hidden border border-sensual-taupe/10">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0x73b6e9c6b0c7e4e!2sBangalore%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Live Location Map"
+                ></iframe>
+              </div>
             </div>
           </div>
 
-          {/* Cyber Crime Complaints */}
-          <div>
-            <h4 className="text-lg font-semibold mb-3 text-sensual-peach">Recent Cyber Crime Complaints</h4>
-            <div className="space-y-2">
-              {recentCyberComplaints.map((complaint, index) => (
-                <div key={index} className="flex justify-between items-center bg-dark-800/30 rounded-lg p-3">
-                  <span>{complaint.ref}</span>
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    complaint.status === 'Resolved' ? 'bg-green-600' : 'bg-yellow-600'
-                  }`}>
-                    {complaint.status}
-                  </span>
+          {/* Emergency & Device Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            {/* Device Status */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all">
+              <h3 className="text-lg font-semibold text-sensual-burgundy mb-4">Device Status</h3>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className={`w-3 h-3 rounded-full ${deviceConnected ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
+                  <div>
+                    <p className="text-sensual-black font-semibold text-sm">Connection</p>
+                    <p className="text-sensual-taupe text-xs">{deviceConnected ? 'All Good' : 'Please Check'}</p>
+                  </div>
                 </div>
-              ))}
+                <div className="pt-4 border-t border-sensual-taupe/10">
+                  <p className="text-xs uppercase tracking-widest text-sensual-taupe font-semibold mb-3">Signal</p>
+                  <div className="flex space-x-1">
+                    {[1, 2, 3, 4].map((bar) => (
+                      <div key={bar} className="h-5 flex-1 bg-gradient-to-t from-sensual-peach to-sensual-burgundy rounded-sm opacity-70 hover:opacity-100 transition-opacity"></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Emergency Contacts */}
+            <div className="lg:col-span-2 bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all">
+              <h3 className="text-lg font-semibold text-sensual-burgundy mb-4">Quick Reach Out</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {emergencyContacts.slice(0, 5).map((contact, index) => (
+                  <div key={index} className="bg-gradient-to-br from-sensual-burgundy/5 to-sensual-peach/5 rounded-xl p-4 hover:shadow-md transition-all border border-sensual-taupe/10">
+                    <p className="text-sensual-black font-semibold text-sm mb-1">{contact.name}</p>
+                    <p className="text-sensual-taupe text-xs mb-3">{contact.phone}</p>
+                    <button
+                      onClick={() => handleCall(contact.phone)}
+                      className="w-full bg-sensual-burgundy hover:bg-sensual-burgundy/90 px-2 py-2 rounded-lg text-xs font-semibold text-white transition-all hover:scale-105"
+                    >
+                      📞 Call
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Quick Action Buttons */}
-        <div className="bg-primary-900/20 backdrop-blur-sm border border-primary-500/20 rounded-2xl p-6">
-          <h3 className="text-xl font-bold mb-4 text-sensual-offwhite">Quick Actions</h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link to="/report-incident" className="block">
-              <button className="w-full bg-primary-500 hover:bg-primary-600 px-4 py-3 rounded-lg font-semibold transition-colors">
-                Report an Incident
-              </button>
-            </Link>
-            <Link to="/cyber-complaint" className="block">
-              <button className="w-full bg-primary-500 hover:bg-primary-600 px-4 py-3 rounded-lg font-semibold transition-colors">
-                File Cyber Complaint
-              </button>
-            </Link>
-            <Link to="/evidence-vault" className="block">
-              <button className="w-full bg-primary-500 hover:bg-primary-600 px-4 py-3 rounded-lg font-semibold transition-colors">
-                Open Evidence Vault
-              </button>
-            </Link>
-            <Link to="/safety-map" className="block">
-              <button className="w-full bg-primary-500 hover:bg-primary-600 px-4 py-3 rounded-lg font-semibold transition-colors">
-                View Safety Map
-              </button>
-            </Link>
+          {/* Activity Timeline */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            {/* Recent Alerts & Incidents */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all">
+              <h3 className="text-lg font-semibold text-sensual-burgundy mb-4">Activity</h3>
+              
+              <div className="mb-5">
+                <p className="text-xs uppercase tracking-widest text-sensual-taupe font-semibold mb-3">Recent Alerts</p>
+                <div className="space-y-2">
+                  {recentSosAlerts.map((alert, index) => (
+                    <div key={index} className="flex justify-between items-center bg-gradient-to-r from-emerald-50 to-transparent rounded-lg p-3 border border-emerald-100/50">
+                      <span className="text-sensual-taupe text-sm">{alert.time}</span>
+                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                        Resolved
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="border-t border-sensual-taupe/10 pt-5">
+                <p className="text-xs uppercase tracking-widest text-sensual-taupe font-semibold mb-3">Your Reports</p>
+                <div className="space-y-2">
+                  {recentIncidents.map((incident, index) => (
+                    <div key={index} className="flex justify-between items-center bg-gradient-to-r from-sensual-peach/10 to-transparent rounded-lg p-3 border border-sensual-peach/20">
+                      <span className="text-sensual-taupe text-sm">{incident.id}</span>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        incident.status === 'Closed' ? 'bg-emerald-100 text-emerald-700' : 'bg-yellow-100 text-yellow-700'
+                      }`}>
+                        {incident.status === 'Closed' ? 'Done' : 'In Review'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Cyber Safety */}
+            <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all">
+              <h3 className="text-lg font-semibold text-sensual-burgundy mb-4">Cyber Safety</h3>
+              <div className="space-y-3 mb-5">
+                {recentCyberComplaints.map((complaint, index) => (
+                  <div key={index} className="bg-gradient-to-r from-sensual-burgundy/5 to-transparent rounded-lg p-4 border border-sensual-taupe/10">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="text-sensual-black font-semibold text-sm">{complaint.ref}</p>
+                        <p className="text-sensual-taupe text-xs mt-1">Reference</p>
+                      </div>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        complaint.status === 'Resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'
+                      }`}>
+                        {complaint.status === 'Resolved' ? 'Closed' : 'Open'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Link to="/cyber-complaint" className="block">
+                <button className="w-full bg-sensual-burgundy hover:bg-sensual-burgundy/90 px-4 py-2.5 rounded-lg font-semibold text-white transition-all text-sm uppercase tracking-wider hover:shadow-md">
+                  Report Something
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
 
+          {/* Quick Actions Footer */}
+          <div className="bg-gradient-to-r from-sensual-burgundy/10 via-sensual-peach/10 to-sensual-taupe/5 border border-sensual-taupe/10 rounded-2xl p-6 shadow-md">
+            <h3 className="text-lg font-semibold text-sensual-burgundy mb-4">Quick Access</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <Link to="/report-incident" className="block">
+                <button className="w-full bg-white hover:bg-sensual-offwhite px-4 py-3 rounded-xl font-semibold text-sensual-burgundy transition-all text-sm border border-sensual-taupe/10 hover:shadow-md">
+                  📝 Report
+                </button>
+              </Link>
+              <Link to="/cyber-complaint" className="block">
+                <button className="w-full bg-white hover:bg-sensual-offwhite px-4 py-3 rounded-xl font-semibold text-sensual-burgundy transition-all text-sm border border-sensual-taupe/10 hover:shadow-md">
+                  🔐 Cyber
+                </button>
+              </Link>
+              <Link to="/evidence-vault" className="block">
+                <button className="w-full bg-white hover:bg-sensual-offwhite px-4 py-3 rounded-xl font-semibold text-sensual-burgundy transition-all text-sm border border-sensual-taupe/10 hover:shadow-md">
+                  📁 Vault
+                </button>
+              </Link>
+              <Link to="/safety-map" className="block">
+                <button className="w-full bg-white hover:bg-sensual-offwhite px-4 py-3 rounded-xl font-semibold text-sensual-burgundy transition-all text-sm border border-sensual-taupe/10 hover:shadow-md">
+                  🗺️ Map
+                </button>
+              </Link>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );
