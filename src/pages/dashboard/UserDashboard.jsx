@@ -56,18 +56,24 @@ const UserDashboard = () => {
         </div>
         
         <nav className="flex-1 p-4 space-y-3">
-          <button className="w-full text-left px-4 py-3 rounded-xl bg-sensual-burgundy/10 text-sensual-burgundy font-semibold transition-all hover:bg-sensual-burgundy/20">
+          <Link to="/dashboard" className="w-full text-left px-4 py-3 rounded-xl bg-sensual-burgundy/10 text-sensual-burgundy font-semibold transition-all hover:bg-sensual-burgundy/20 block">
             {sidebarOpen ? '🏠 Dashboard' : '🏠'}
-          </button>
-          <button className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all">
+          </Link>
+          <Link to="/sos" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+            {sidebarOpen ? '🆘 SOS Alert' : '🆘'}
+          </Link>
+          <Link to="/evidence-vault" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
             {sidebarOpen ? '📁 Evidence' : '📁'}
-          </button>
-          <button className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all">
+          </Link>
+          <Link to="/safety-map" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+            {sidebarOpen ? '🗺️ Safety Map' : '🗺️'}
+          </Link>
+          <Link to="/incident-report" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
             {sidebarOpen ? '📋 Reports' : '📋'}
-          </button>
-          <button className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all">
+          </Link>
+          <Link to="/dashboard" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
             {sidebarOpen ? '⚙️ Settings' : '⚙️'}
-          </button>
+          </Link>
         </nav>
 
         <div className="p-4 border-t border-sensual-taupe/20">
