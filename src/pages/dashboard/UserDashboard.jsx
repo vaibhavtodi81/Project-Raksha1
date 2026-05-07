@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
@@ -34,6 +34,37 @@ const UserDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
   const [locationError, setLocationError] = useState(null);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
+
+  useEffect(() => {
+    const startCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        streamRef.current = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      } catch (err) {
+        console.error("Error accessing camera:", err);
+      }
+    };
+
+    const stopCamera = () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
+      }
+    };
+
+    if (sosActive) {
+      startCamera();
+    } else {
+      stopCamera();
+    }
+
+    return () => stopCamera();
+  }, [sosActive]);
 
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -200,13 +231,26 @@ const UserDashboard = () => {
                 <p className="text-sensual-black/80 text-xs uppercase tracking-widest mb-6 font-bold">In Need?</p>
                 <button
                   onClick={handleSosToggle}
-                  className={`w-28 h-28 rounded-full text-4xl font-bold mb-6 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105 ${
+                  className={`w-28 h-28 rounded-full text-4xl font-bold mb-6 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105 overflow-hidden relative ${
                     sosActive
-                      ? 'bg-red-500 hover:bg-red-600 shadow-red-300 animate-pulse text-white'
+                      ? 'bg-black shadow-red-300 animate-pulse border-4 border-red-500'
                       : 'bg-sensual-burgundy hover:bg-sensual-burgundy/90 shadow-sensual-burgundy/30 text-white'
                   }`}
                 >
-                  {sosActive ? '⚠️' : '🆘'}
+                  {sosActive ? (
+                    <video 
+                      ref={videoRef} 
+                      autoPlay 
+                      muted 
+                      playsInline 
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    '🆘'
+                  )}
+                  {sosActive && (
+                    <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
+                  )}
                 </button>
                 <p className="text-sensual-black/70 text-xs mb-2 font-medium">Tap to activate</p>
                 <div className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold ${sosActive ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
