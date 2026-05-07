@@ -100,26 +100,26 @@ const UserDashboard = () => {
       <div className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-white border-r border-sensual-taupe/20 transition-all duration-300 flex flex-col shadow-sm`}>
         <div className="p-6 border-b border-sensual-taupe/20">
           <h2 className="text-xl font-bold italic text-sensual-burgundy">Raksha</h2>
-          <p className="text-xs text-sensual-taupe uppercase tracking-widest">Your Shield</p>
+          <p className="text-xs text-sensual-black/60 uppercase tracking-widest font-bold">Your Shield</p>
         </div>
         
         <nav className="flex-1 p-4 space-y-3">
-          <Link to="/dashboard" className="w-full text-left px-4 py-3 rounded-xl bg-sensual-burgundy/10 text-sensual-burgundy font-semibold transition-all hover:bg-sensual-burgundy/20 block">
+          <Link to="/dashboard" className="w-full text-left px-4 py-3 rounded-xl bg-sensual-burgundy/10 text-sensual-burgundy font-bold transition-all hover:bg-sensual-burgundy/20 block">
             {sidebarOpen ? '🏠 Dashboard' : '🏠'}
           </Link>
-          <Link to="/sos" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+          <Link to="/sos" className="w-full text-left px-4 py-3 rounded-xl text-sensual-black/70 hover:bg-sensual-burgundy/5 transition-all block font-medium">
             {sidebarOpen ? '🆘 SOS Alert' : '🆘'}
           </Link>
-          <Link to="/evidence-vault" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+          <Link to="/evidence-vault" className="w-full text-left px-4 py-3 rounded-xl text-sensual-black/70 hover:bg-sensual-burgundy/5 transition-all block font-medium">
             {sidebarOpen ? '📁 Evidence' : '📁'}
           </Link>
-          <Link to="/safety-map" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+          <Link to="/safety-map" className="w-full text-left px-4 py-3 rounded-xl text-sensual-black/70 hover:bg-sensual-burgundy/5 transition-all block font-medium">
             {sidebarOpen ? '🗺️ Safety Map' : '🗺️'}
           </Link>
-          <Link to="/incident-report" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+          <Link to="/incident-report" className="w-full text-left px-4 py-3 rounded-xl text-sensual-black/70 hover:bg-sensual-burgundy/5 transition-all block font-medium">
             {sidebarOpen ? '📋 Reports' : '📋'}
           </Link>
-          <Link to="/dashboard" className="w-full text-left px-4 py-3 rounded-xl text-sensual-taupe hover:bg-sensual-burgundy/5 transition-all block">
+          <Link to="/dashboard" className="w-full text-left px-4 py-3 rounded-xl text-sensual-black/70 hover:bg-sensual-burgundy/5 transition-all block font-medium">
             {sidebarOpen ? '⚙️ Settings' : '⚙️'}
           </Link>
         </nav>
@@ -141,11 +141,11 @@ const UserDashboard = () => {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-3xl font-bold italic text-sensual-burgundy">Welcome, {userName}! 👋</h1>
-              <p className="text-sensual-taupe text-sm mt-1">Everything's looking good today</p>
+              <p className="text-sensual-black/70 text-sm mt-1 font-medium">Everything's looking good today</p>
             </div>
             <div className="text-right">
-              <p className="text-sensual-taupe text-xs uppercase tracking-widest">Last check</p>
-              <p className="text-sensual-burgundy font-semibold">Just now</p>
+              <p className="text-sensual-black/60 text-xs uppercase tracking-widest font-bold">Last check</p>
+              <p className="text-sensual-burgundy font-bold">Just now</p>
             </div>
           </div>
         </div>
@@ -158,36 +158,36 @@ const UserDashboard = () => {
             {/* Safety Status */}
             <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
               <div className="flex justify-between items-start mb-3">
-                <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold">Safety Status</p>
+                <p className="text-sensual-black/70 text-xs uppercase tracking-widest font-bold">Safety Status</p>
                 <div className={`w-3 h-3 rounded-full ${sosActive ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></div>
               </div>
               <p className={`text-3xl font-bold italic ${sosActive ? 'text-red-600' : 'text-emerald-600'}`}>
                 {sosActive ? 'Alert' : 'Safe'}
               </p>
-              <p className="text-sensual-taupe text-xs mt-2">{sosActive ? 'Active' : 'No alerts'}</p>
+              <p className="text-sensual-black/60 text-xs mt-2 font-medium">{sosActive ? 'Active' : 'No alerts'}</p>
             </div>
 
             {/* Quick Checkup */}
             <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
-              <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold mb-3">Wellness</p>
+              <p className="text-sensual-black/70 text-xs uppercase tracking-widest font-bold mb-3">Wellness</p>
               <p className="text-3xl font-bold text-sensual-peach">{wellnessScore}%</p>
-              <p className="text-sensual-taupe text-xs mt-2">All systems good</p>
+              <p className="text-sensual-black/60 text-xs mt-2 font-medium">All systems good</p>
             </div>
 
             {/* Activity Summary */}
             <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
-              <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold mb-3">Recent Activity</p>
+              <p className="text-sensual-black/70 text-xs uppercase tracking-widest font-bold mb-3">Recent Activity</p>
               <p className="text-3xl font-bold text-sensual-burgundy">{incidentsCount}</p>
-              <p className="text-sensual-taupe text-xs mt-2">Reports this month</p>
+              <p className="text-sensual-black/60 text-xs mt-2 font-medium">Reports this month</p>
             </div>
 
             {/* Device Health */}
             <div className="bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
-              <p className="text-sensual-taupe text-xs uppercase tracking-widest font-semibold mb-3">Device</p>
+              <p className="text-sensual-black/70 text-xs uppercase tracking-widest font-bold mb-3">Device</p>
               <p className={`text-3xl font-bold ${deviceConnected ? 'text-emerald-600' : 'text-red-600'}`}>
                 {deviceConnected ? '✓' : '!'}
               </p>
-              <p className="text-sensual-taupe text-xs mt-2">{deviceConnected ? 'Connected' : 'Check'}</p>
+              <p className="text-sensual-black/60 text-xs mt-2 font-medium">{deviceConnected ? 'Connected' : 'Check'}</p>
             </div>
           </div>
 
@@ -197,7 +197,7 @@ const UserDashboard = () => {
             {/* SOS Button Section */}
             <div className="lg:col-span-1 bg-gradient-to-br from-sensual-burgundy/20 via-sensual-peach/20 to-sensual-taupe/10 backdrop-blur border border-sensual-peach/30 rounded-2xl p-8 flex flex-col items-center justify-center shadow-md hover:shadow-lg transition-all">
               <div className="text-center">
-                <p className="text-sensual-taupe text-xs uppercase tracking-widest mb-6 font-semibold">In Need?</p>
+                <p className="text-sensual-black/80 text-xs uppercase tracking-widest mb-6 font-bold">In Need?</p>
                 <button
                   onClick={handleSosToggle}
                   className={`w-28 h-28 rounded-full text-4xl font-bold mb-6 transition-all duration-300 flex items-center justify-center shadow-lg hover:scale-105 ${
@@ -208,8 +208,8 @@ const UserDashboard = () => {
                 >
                   {sosActive ? '⚠️' : '🆘'}
                 </button>
-                <p className="text-sensual-taupe text-xs mb-2">Tap to activate</p>
-                <div className={`inline-block px-4 py-1.5 rounded-full text-sm font-semibold ${sosActive ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
+                <p className="text-sensual-black/70 text-xs mb-2 font-medium">Tap to activate</p>
+                <div className={`inline-block px-4 py-1.5 rounded-full text-sm font-bold ${sosActive ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
                   {sosActive ? 'Alert Active' : "You're Safe"}
                 </div>
               </div>
@@ -219,12 +219,12 @@ const UserDashboard = () => {
             <div className="lg:col-span-2 bg-white/70 backdrop-blur border border-sensual-taupe/10 rounded-2xl p-6 overflow-hidden shadow-md hover:shadow-lg transition-all">
               <div className="flex justify-between items-center mb-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-sensual-burgundy">Your Location</h3>
-                  <p className="text-sensual-taupe text-xs mt-1">Real-time tracking</p>
+                  <h3 className="text-lg font-bold text-sensual-burgundy">Your Location</h3>
+                  <p className="text-sensual-black/70 text-xs mt-1 font-medium">Real-time tracking</p>
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className={`w-2.5 h-2.5 rounded-full ${isInSafeZone ? 'bg-emerald-500' : 'bg-yellow-500'}`}></div>
-                  <span className="text-xs text-sensual-taupe uppercase tracking-widest font-semibold">
+                  <span className="text-xs text-sensual-black/80 uppercase tracking-widest font-bold">
                     {isInSafeZone ? '✓ Safe Zone' : '⚡ Alert Zone'}
                   </span>
                 </div>
@@ -270,12 +270,12 @@ const UserDashboard = () => {
                 <div className="flex items-center space-x-3">
                   <div className={`w-3 h-3 rounded-full ${deviceConnected ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
                   <div>
-                    <p className="text-sensual-black font-semibold text-sm">Connection</p>
-                    <p className="text-sensual-taupe text-xs">{deviceConnected ? 'All Good' : 'Please Check'}</p>
+                    <p className="text-sensual-black font-bold text-sm">Connection</p>
+                    <p className="text-sensual-black/60 text-xs font-medium">{deviceConnected ? 'All Good' : 'Please Check'}</p>
                   </div>
                 </div>
                 <div className="pt-4 border-t border-sensual-taupe/10">
-                  <p className="text-xs uppercase tracking-widest text-sensual-taupe font-semibold mb-3">Signal</p>
+                  <p className="text-xs uppercase tracking-widest text-sensual-black/70 font-bold mb-3">Signal</p>
                   <div className="flex space-x-1">
                     {[1, 2, 3, 4].map((bar) => (
                       <div key={bar} className="h-5 flex-1 bg-gradient-to-t from-sensual-peach to-sensual-burgundy rounded-sm opacity-70 hover:opacity-100 transition-opacity"></div>
@@ -291,8 +291,8 @@ const UserDashboard = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {emergencyContacts.slice(0, 5).map((contact, index) => (
                   <div key={index} className="bg-gradient-to-br from-sensual-burgundy/5 to-sensual-peach/5 rounded-xl p-4 hover:shadow-md transition-all border border-sensual-taupe/10">
-                    <p className="text-sensual-black font-semibold text-sm mb-1">{contact.name}</p>
-                    <p className="text-sensual-taupe text-xs mb-3">{contact.phone}</p>
+                    <p className="text-sensual-black font-bold text-sm mb-1">{contact.name}</p>
+                    <p className="text-sensual-black/70 text-xs mb-3 font-medium">{contact.phone}</p>
                     <button
                       onClick={() => handleCall(contact.phone)}
                       className="w-full bg-sensual-burgundy hover:bg-sensual-burgundy/90 px-2 py-2 rounded-lg text-xs font-semibold text-white transition-all hover:scale-105"
@@ -313,12 +313,12 @@ const UserDashboard = () => {
               <h3 className="text-lg font-semibold text-sensual-burgundy mb-4">Activity</h3>
               
               <div className="mb-5">
-                <p className="text-xs uppercase tracking-widest text-sensual-taupe font-semibold mb-3">Recent Alerts</p>
+                <p className="text-xs uppercase tracking-widest text-sensual-black/70 font-bold mb-3">Recent Alerts</p>
                 <div className="space-y-2">
                   {recentSosAlerts.map((alert, index) => (
                     <div key={index} className="flex justify-between items-center bg-gradient-to-r from-emerald-50 to-transparent rounded-lg p-3 border border-emerald-100/50">
-                      <span className="text-sensual-taupe text-sm">{alert.time}</span>
-                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                      <span className="text-sensual-black/70 text-sm font-medium">{alert.time}</span>
+                      <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
                         Resolved
                       </span>
                     </div>
@@ -327,12 +327,12 @@ const UserDashboard = () => {
               </div>
 
               <div className="border-t border-sensual-taupe/10 pt-5">
-                <p className="text-xs uppercase tracking-widest text-sensual-taupe font-semibold mb-3">Your Reports</p>
+                <p className="text-xs uppercase tracking-widest text-sensual-black/70 font-bold mb-3">Your Reports</p>
                 <div className="space-y-2">
                   {recentIncidents.map((incident, index) => (
                     <div key={index} className="flex justify-between items-center bg-gradient-to-r from-sensual-peach/10 to-transparent rounded-lg p-3 border border-sensual-peach/20">
-                      <span className="text-sensual-taupe text-sm">{incident.id}</span>
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                      <span className="text-sensual-black/70 text-sm font-medium">{incident.id}</span>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
                         incident.status === 'Closed' ? 'bg-emerald-100 text-emerald-700' : 'bg-yellow-100 text-yellow-700'
                       }`}>
                         {incident.status === 'Closed' ? 'Done' : 'In Review'}
@@ -351,10 +351,10 @@ const UserDashboard = () => {
                   <div key={index} className="bg-gradient-to-r from-sensual-burgundy/5 to-transparent rounded-lg p-4 border border-sensual-taupe/10">
                     <div className="flex justify-between items-start">
                       <div>
-                        <p className="text-sensual-black font-semibold text-sm">{complaint.ref}</p>
-                        <p className="text-sensual-taupe text-xs mt-1">Reference</p>
+                        <p className="text-sensual-black font-bold text-sm">{complaint.ref}</p>
+                        <p className="text-sensual-black/60 text-xs mt-1 font-medium">Reference</p>
                       </div>
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
                         complaint.status === 'Resolved' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'
                       }`}>
                         {complaint.status === 'Resolved' ? 'Closed' : 'Open'}
