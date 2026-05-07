@@ -1,10 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
+// Fix for Leaflet default icon issue in React
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+// Helper component to update map view when location changes
+const RecenterMap = ({ position }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (position) {
+      map.setView(position, 13);
+    }
+  }, [position, map]);
+  return null;
+};
 
 const UserDashboard = () => {
   const [sosActive, setSosActive] = useState(false);
   const [userName] = useState("Priya");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [userLocation, setUserLocation] = useState(null);
+  const [locationError, setLocationError] = useState(null);
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setLocationError(error.message);
+          // Fallback to a default location (e.g., Bangalore)
+          setUserLocation([12.9716, 77.5946]);
+        }
+      );
+    } else {
+      setLocationError("Geolocation not supported");
+      setUserLocation([12.9716, 77.5946]);
+    }
+  }, []);
 
   // Hardcoded data
   const deviceConnected = true;
@@ -181,17 +229,33 @@ const UserDashboard = () => {
                   </span>
                 </div>
               </div>
-              <div className="aspect-video bg-gradient-to-br from-sensual-taupe/10 to-sensual-cream rounded-xl overflow-hidden border border-sensual-taupe/10">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0x73b6e9c6b0c7e4e!2sBangalore%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Live Location Map"
-                ></iframe>
+              <div className="aspect-video bg-gradient-to-br from-sensual-taupe/10 to-sensual-cream rounded-xl overflow-hidden border border-sensual-taupe/10 relative">
+                {userLocation ? (
+                  <MapContainer 
+                    center={userLocation} 
+                    zoom={13} 
+                    style={{ height: '100%', width: '100%' }}
+                    zoomControl={false}
+                  >
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <Marker position={userLocation}>
+                      <Popup>
+                        You are here. <br /> {isInSafeZone ? "Safe Zone" : "Alert Zone"}
+                      </Popup>
+                    </Marker>
+                    <RecenterMap position={userLocation} />
+                  </MapContainer>
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center space-y-3">
+                    <div className="w-8 h-8 border-4 border-sensual-burgundy border-t-transparent rounded-full animate-spin"></div>
+                    <p className="text-sensual-taupe text-sm font-medium">
+                      {locationError ? `Location Error: ${locationError}` : "Locating you..."}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
