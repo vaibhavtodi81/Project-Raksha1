@@ -1,11 +1,58 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, AlertCircle, Phone, Navigation, Eye, Heart, X } from 'lucide-react'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+
+// Fix for Leaflet default icon issue in React
+import icon from 'leaflet/dist/images/marker-icon.png'
+import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
+})
+
+L.Marker.prototype.options.icon = DefaultIcon
+
+// Helper component to update map view when location changes
+const RecenterMap = ({ position }) => {
+  const map = useMap()
+  useEffect(() => {
+    if (position) {
+      map.setView(position, 13)
+    }
+  }, [position, map])
+  return null
+}
 
 const SafetyMap = () => {
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [filterType, setFilterType] = useState('all')
   const [showNearby, setShowNearby] = useState(true)
+  const [userLocation, setUserLocation] = useState(null)
+  const [locationError, setLocationError] = useState(null)
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation([position.coords.latitude, position.coords.longitude])
+        },
+        (error) => {
+          console.error("Error getting location:", error)
+          setLocationError(error.message)
+          setUserLocation([12.9716, 77.5946]) // Fallback
+        }
+      )
+    } else {
+      setLocationError("Geolocation not supported")
+      setUserLocation([12.9716, 77.5946])
+    }
+  }, [])
 
   const safeLocations = [
     {
@@ -200,16 +247,55 @@ const SafetyMap = () => {
         >
           <div className="aspect-video bg-gradient-to-br from-[#1a0a12] via-[#2a1520] to-[#1a0a12] relative flex items-center justify-center">
             {/* Map Container */}
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5!2d77.5946!3d12.9716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670c9b44e6d%3A0x73b6e9c6b0c7e4e!2sBangalore%2C%20Karnataka!5e0!3m2!1sen!2sin!4v1703123456789!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Safety Map"
-            ></iframe>
+            {userLocation ? (
+              <MapContainer 
+                center={userLocation} 
+                zoom={13} 
+                style={{ height: '100%', width: '100%', zIndex: 0 }}
+                zoomControl={false}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                
+                {/* User Marker */}
+                <Marker position={userLocation}>
+                  <Popup>You are here</Popup>
+                </Marker>
+
+                {/* Filtered Locations Markers */}
+                {filteredLocations.map(location => (
+                  <Marker 
+                    key={location.id} 
+                    position={[location.latitude, location.longitude]}
+                    icon={L.divIcon({
+                      className: 'custom-div-icon',
+                      html: `<div style="font-size: 24px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3))">${location.icon}</div>`,
+                      iconSize: [30, 30],
+                      iconAnchor: [15, 15]
+                    })}
+                  >
+                    <Popup>
+                      <div className="p-1">
+                        <p className="font-bold">{location.name}</p>
+                        <p className="text-xs">{location.type}</p>
+                        {location.emergency && <p className="text-xs mt-1 text-[#610c27]">Emergency: {location.emergency}</p>}
+                      </div>
+                    </Popup>
+                  </Marker>
+                ))}
+
+                <RecenterMap position={userLocation} />
+              </MapContainer>
+            ) : (
+              <div className="flex flex-col items-center justify-center space-y-4">
+                <div className="w-12 h-12 border-4 border-[#e3c1b4] border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-[#ac9c8d] font-medium">
+                  {locationError ? `Error: ${locationError}` : "Initializing Radar..."}
+                </p>
+              </div>
+            )}
 
             {/* Overlay Legend */}
             <div className="absolute bottom-4 right-4 bg-[#1a0a12]/90 backdrop-blur border border-[#610c27]/50 rounded-lg p-4 text-sm">
