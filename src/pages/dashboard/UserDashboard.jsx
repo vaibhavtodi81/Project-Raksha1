@@ -34,35 +34,33 @@ const UserDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userLocation, setUserLocation] = useState(null);
   const [locationError, setLocationError] = useState(null);
-  const videoRef = useRef(null);
+  const [cameraStream, setCameraStream] = useState(null);
   const streamRef = useRef(null);
 
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      streamRef.current = stream;
+      setCameraStream(stream);
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+    }
+  };
+
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    setCameraStream(null);
+  };
+
   useEffect(() => {
-    const startCamera = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        streamRef.current = stream;
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      } catch (err) {
-        console.error("Error accessing camera:", err);
-      }
-    };
-
-    const stopCamera = () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
-        streamRef.current = null;
-      }
-    };
-
     if (sosActive) {
       startCamera();
     } else {
       stopCamera();
     }
-
     return () => stopCamera();
   }, [sosActive]);
 
@@ -239,11 +237,15 @@ const UserDashboard = () => {
                 >
                   {sosActive ? (
                     <video 
-                      ref={videoRef} 
+                      ref={(el) => {
+                        if (el && cameraStream) {
+                          el.srcObject = cameraStream;
+                        }
+                      }}
                       autoPlay 
                       muted 
                       playsInline 
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="absolute inset-0 w-full h-full object-cover bg-black"
                     />
                   ) : (
                     '🆘'
